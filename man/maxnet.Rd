@@ -40,6 +40,31 @@ maxnet.formula(p, data, classes="default")
   \code{1-exp(-exp(entropy+lp))} if \code{type} is "cloglog".
 
   \code{1/(1+exp(-entropy-lp))} if \code{type} is "logistic".
+  
+  \code{data}: categorical predictor variables must be designated as \code{factors}.
+
+  \code{classes}: feature classes, with \code{l} = "linear", \code{q} = "quadratic",
+\code{p} = "product", \code{h} = "hinge", and \code{t} = "threshold". Features are simple
+mathematical transformations of the input continuous predictors. Categorical predictors
+are used as-is. The default classes used are based on sample size of presence points (\code{np}) 
+as follows:
+
+  \code{(np < 10) classes <- "l" }
+  
+  \code{(np < 15) classes <- "lq" }
+  
+  \code{(np < 80) classes <- "lqh" }
+  
+  \code{else classes <- "lqph" }
+  
+  \code{maxnet.formula}: is used to calculate the above default classes. To override this,
+either designate the classes to use with \code{classes} and set \code{f = NULL}, or set
+\code{classes = NULL} and set \code{f} to your own formula.
+
+  \code{regfun}: by default uses the \code{maxnet.default.regularization} function to calculate
+the base regularization constant for each feature. The output vector is then multiplied 
+by \code{regmult} to create the vector of \code{penalty.factor}s to pass on to the \code{glmnet} call.
+
 }
 \value{
 Maxnet returns an object of class \code{maxnet}, which is a list consisting of a glmnet model with the following elements added:
@@ -54,8 +79,11 @@ Maxnet returns an object of class \code{maxnet}, which is a list consisting of a
   \item{samplemeans}{ mean of each predictor over samples (majority for factors) }
   \item{levels}{ levels of each predictor that is a factor }
 }
+\seealso{
+  \code{\link[glmnet]{glmnet}}
+}
 \author{
-  Steven Phillips
+  Steven Phillips, with some edits and expansions by Michelle M. Fink
 }
 \examples{
 library(maxnet)

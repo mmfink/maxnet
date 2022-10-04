@@ -5,13 +5,14 @@ function(p, data, f=maxnet.formula(p, data), regmult=1.0,
          regfun=maxnet.default.regularization, addsamplestobackground=T, ...)
 {
    if (anyNA(data)) stop("NA values in data table. Please remove them and rerun.")
-   if (!is.vector(p)) { # attempted fix for upstream issue #16
+   if (!is.vector(p)) {
      p <- as.vector(p)
    }
    if (addsamplestobackground) {
        pdata <- data[p==1,]
        ndata <- data[p==0,]
        # add to the background any presence data that isn't already in the background
+       # TODO: investigate using future.apply here (upstream issue #18)
        toadd <- apply(pdata, 1, function(rr) !any(apply(ndata, 1, function(r) identical(r, rr))))
        p <- c(p, rep(0, sum(toadd)))
        data <- rbind(data, pdata[toadd,])
