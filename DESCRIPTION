@@ -1,8 +1,8 @@
 Package: maxnet
 Type: Package
 Title: Fitting 'Maxent' Species Distribution Models with 'glmnet'
-Version: 0.1.4
-Date: 2021-07-08
+Version: 0.1.5
+Date: 2022-11-06
 Author: Steven Phillips
 Maintainer: Steven Phillips <mrmaxent@gmail.com>
 Imports:
@@ -12,7 +12,8 @@ Imports:
     dplyr
 Suggests:
     stars,
-    terra
+    terra,
+    data.table
 Description: Procedures to fit species distributions models from occurrence records and environmental variables, using 'glmnet' for model fitting. Model structure is the same as for the 'Maxent' Java package, version 3.4.0, with the same feature types and regularization options.  See the 'Maxent' website <http://biodiversityinformatics.amnh.org/open_source/maxent> for more details.
 License: MIT + file LICENSE
 URL: https://github.com/mrmaxent/maxnet

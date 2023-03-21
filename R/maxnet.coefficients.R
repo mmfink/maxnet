@@ -1,13 +1,15 @@
+#' @importFrom utils installed.packages
 #' @export
 maxnet.coefficients <- 
   function(envnames, object) {
     if('data.table' %in% rownames(installed.packages())) {
+      #' @import data.table
       `%nchin%` <- Negate(data.table::`%chin%`)
-      outable <- data.table(input=envnames)
+      outable <- data.table::data.table(input=envnames)
       xtrafeatures <- names(object$betas) %nchin% outable[, input]
       outable <- rbind(outable, names(object$betas[xtrafeatures]),
                        use.names=FALSE)
-      setkey(outable, input)
+      data.table::setkey(outable, input)
       bs <- which(outable[, input] %in% names(object$betas))
       outable[bs, coeff := object$betas][!bs, coeff := 0]
       
