@@ -10,8 +10,9 @@ maxnet.coefficients <-
       outable <- rbind(outable, names(object$betas[xtrafeatures]),
                        use.names=FALSE)
       data.table::setkey(outable, input)
-      bs <- which(outable[, input] %in% names(object$betas))
-      outable[bs, coeff := object$betas][!bs, coeff := 0]
+      xtra <- which(outable[, input] %nchin% names(object$betas))
+      tempdf <- data.table::SJ(input = names(object$betas), coeff = object$betas)
+      outable <- tempdf[outable, on="input"][xtra, coeff := 0]
       
       fmn <- which(names(object$featuremins) %in% outable[, input])
       outable[, minval := object$featuremins[fmn]]

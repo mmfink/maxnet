@@ -1,50 +1,63 @@
-#' Maxent over glmnet
+#' @name maxnet
+#' @aliases maxnet.default.regularization maxnet.formula Maxent
+#' @title Maxent over glmnet
 #'
-#' @description Maxent species distribution modeling using glmnet for model
-#'   fitting
-#'
-#'   Using \code{lp} for the linear predictor and \code{entropy} for the entropy
-#'   of the exponential model over the background data, the values plotted on
-#'   the y-axis are:
-#'
-#'   \itemize{ \item{\code{lp} if \code{type} is "link"}
-#'
-#'   \item{\code{exp(lp)} if \code{type} is "exponential"}
-#'
-#'   \item{\code{1-exp(-exp(entropy+lp))} if \code{type} is "cloglog"}
-#'
-#'   \item{\code{1/(1+exp(-entropy-lp))} if \code{type} is "logistic"} }
-#'
+#' @description 
+#' Maxent species distribution modeling using glmnet for model fitting
+#' 
 #' @export
 #' @param p numeric, a vector of 1 (for presence) or 0 (for background)
-#' @param data a matrix or data frame of predictor variables
+#' @param data a matrix or data.frame of predictor variables
 #' @param f formula, determines the features to be used
 #' @param regmult numeric, a constant to adjust regularization
 #' @param regfun function, computes regularization constant for each feature
+#' By default it uses the [maxnet.default.regularization()] function to calculate
+#' the base regularization constant for each feature. The output vector is then multiplied 
+#' by `regmult` to create the vector of `penalty.factor`s to pass on to the [glmnet()] call.
 #' @param addsamplestobackground logical, if TRUE then add to the background any
 #'   presence sample that is not already there
 #' @param m a matrix of feature values
-#' @param classes charcater, continuous feature classes desired, either
-#'   "default" or any subset of "lqpht" (for example, "lh")
+#' @param classes charcater, feature classes, with `l` = "linear", `q` = "quadratic",
+#' `p` = "product", `h` = "hinge", and `t` = "threshold". Features are simple
+#' mathematical transformations of the input continuous predictors. Categorical predictors
+#' are used as-is. The default classes used are based on sample size of presence points (`np`) 
+#' as follows:
+#'   
+#' * `(np < 10) classes <- "l"`
+#' * `(np < 15) classes <- "lq"`
+#' * `(np < 80) classes <- "lqh"`
+#' * `else classes <- "lqph"`
+#' 
+#'   [maxnet.formula()] is used to calculate the above default classes. To override this,
+#'either designate the classes to use with `classes` and set `f = NULL`, or set
+#'`classes = NULL` and set `f` to your own formula.
 #' @param ... not used
+#'
+#' @details
+#' Using `lp` for the linear predictor and `entropy` for the entropy
+#' of the exponential model over the background data, the values plotted on
+#' the y-axis are:
+#'   
+#'   * `lp` if `type` is "link"
+#'   * `exp(lp)` if `type` is "exponential"     
+#'   * `1-exp(-exp(entropy+lp))` if `type` is "cloglog"
+#'   * `1/(1+exp(-entropy-lp))` if `type` is "logistic"
 #'
 #' @return Maxnet returns an object of class \code{maxnet}, which is a list
 #'   consisting of a glmnet model with the following elements added:
-#'\describe{
-#'  \item{betas}{ nonzero coefficients of the fitted model }
-#'  \item{alpha}{ constant offset making the exponential model sum to one over the background data }
-#'  \item{entropy}{ entropy of the exponential model }
-#'  \item{penalty.factor}{ the regularization constants used for each feature }
-#'  \item{featuremins}{ minimum of each feature, to be used for clamping }
-#'  \item{featuremaxs}{ maximum of each feature, to be used for clamping }
-#'  \item{varmin}{ minimum of each predictor, to be used for clamping }
-#'  \item{varmax}{ maximum of each predictor, to be used for clamping }
-#'  \item{samplemeans}{ mean of each predictor over samples (majority for factors) }
-#'  \item{levels}{ levels of each predictor that is a factor }
-#'}
+#'  * `betas` nonzero coefficients of the fitted model 
+#'  * `alpha` constant offset making the exponential model sum to one over the background data 
+#'  * `entropy` entropy of the exponential model 
+#'  * `penalty.factor` the regularization constants used for each feature 
+#'  * `featuremins` minimum of each feature, to be used for clamping 
+#'  * `featuremaxs` maximum of each feature, to be used for clamping 
+#'  * `varmin` minimum of each predictor, to be used for clamping 
+#'  * `varmax` maximum of each predictor, to be used for clamping 
+#'  * `samplemeans` mean of each predictor over samples (majority for factors) 
+#'  * `levels` levels of each predictor that is a factor 
 #' @author Steve Phillips
 #' @examples
-#' \dontrun{
+#' ```
 #'   library(maxnet)
 #'   data(bradypus)
 #'   p <- bradypus$presence
@@ -53,7 +66,7 @@
 #'   plot(mod, type="cloglog")
 #'   mod <- maxnet(p, data, maxnet.formula(p, data, classes="lq"))
 #'   plot(mod, "tmp6190_ann")
-#' }
+#' ```
 maxnet <-
 function(p, data, f=maxnet.formula(p, data), regmult=1.0, 
          regfun=maxnet.default.regularization, addsamplestobackground=T, ...)

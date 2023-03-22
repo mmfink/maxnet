@@ -53,5 +53,5 @@ that contains variable and response columns otherwise \code{NULL} invisibly
 Compute and plot a single response variable
 }
 \seealso{
-\code{\link{plot.maxnet}}
+\code{\link[=plot.maxnet]{plot.maxnet()}}
 }
