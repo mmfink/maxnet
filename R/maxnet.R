@@ -1,5 +1,5 @@
 #' @name maxnet
-#' @aliases maxnet.default.regularization maxnet.formula Maxent
+#' @aliases maxnet.default.regularization maxnet.formula
 #' @title Maxent over glmnet
 #'
 #' @description 

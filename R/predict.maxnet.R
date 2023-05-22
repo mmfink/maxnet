@@ -43,7 +43,8 @@ predict.maxnet <-
     
     if (clamp) {
       for (v in intersect(names(object$varmax), names(newdataframe))) {
-        newdataframe[,v] <- pmin(pmax(newdataframe[,v], object$varmin[v]), object$varmax[v])
+        #newdataframe[,v] <- pmin(pmax(newdataframe[,v], object$varmin[v]), object$varmax[v])
+        newdataframe[[v]] <- pmin(pmax(newdataframe[[v]], object$varmin[v]), object$varmax[v])
       }
     }
     terms <- sub("hinge\\((.*)\\):(.*):(.*)$", "hingeval(\\1,\\2,\\3)", names(object$betas))

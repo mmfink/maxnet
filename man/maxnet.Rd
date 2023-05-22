@@ -5,7 +5,6 @@
 \alias{maxnet}
 \alias{maxnet.default.regularization}
 \alias{maxnet.formula}
-\alias{Maxent}
 \title{Maxent over glmnet}
 \usage{
 maxnet(
