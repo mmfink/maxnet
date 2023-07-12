@@ -14,7 +14,7 @@ maxnet.varImp(modobj, resp_table, numReplicates = 5)
 \item{numReplicates}{Integer. Number of permutations performed to compute importance.}
 }
 \value{
-A named vector of percent importance scores for the variables present in the maxnet model object sorted from highest to lowest.
+A plot and a named vector of percent importance scores for the variables present in the maxnet model object sorted from highest to lowest.
 }
 \description{
 Computes variable importance scores for all variables present in a maxnet model object. Scores are indicative and should be interpreted with caution as variable interaction is not considered in the computation of the scores.

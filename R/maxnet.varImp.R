@@ -16,7 +16,7 @@
 #' A vector of mean scores for each variable expressed as a percentage of the sum of all mean scores is returned.
 #' }
 #'
-#' @return A named vector of percent importance scores for the variables present in the maxnet model object sorted from highest to lowest.
+#' @return A plot and a named vector of percent importance scores for the variables present in the maxnet model object sorted from highest to lowest.
 #' @references based on peterbat1/fitMaxnet varImportance.R [https://rdrr.io/github/peterbat1/fitMaxnet/src/R/varImportance.R]
 
 maxnet.varImp <- function(modobj, resp_table, numReplicates = 5) {
@@ -47,6 +47,15 @@ maxnet.varImp <- function(modobj, resp_table, numReplicates = 5) {
   }
   
   importance <- 1 - importance
+  out <- round(100*importance/sum(importance), 2)
   
-  return(round(100*importance/sum(importance), 2))
+  par(mar=c(4,7,4,1) + 0.1)
+  plotvar <- out[order(out)]
+  b <- barplot(height=plotvar, width=length(plotvar), 
+               col=hcl.colors(length(plotvar), palette="PuBu"),
+               yaxt="n", horiz=TRUE, main="Variable Importance")
+  mtext(names(plotvar), side=2, line=0.1, las=1, at=b, cex=0.8)
+  invisible(NULL)
+  
+  return(out)
 }
