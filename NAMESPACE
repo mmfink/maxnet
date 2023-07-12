@@ -3,6 +3,7 @@
 S3method(plot,maxnet)
 S3method(predict,maxnet)
 export(categorical)
+export(cv.maxnet)
 export(hinge)
 export(maxnet)
 export(maxnet.coefficients)
