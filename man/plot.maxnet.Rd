@@ -44,6 +44,18 @@ that contain variable and response columns otherwise \code{NULL} invisibly
 \description{
 Create response plots for user selected predictors in a maxnet model
 }
+\examples{
+ 
+```
+# To generate the same type of plots that the Maxent java program does
+  library(maxnet)
+  data(bradypus)
+  p <- bradypus$presence
+  data <- bradypus[,-1]
+  mod <- maxnet(p, data)
+  plot(mod, type="cloglog", asp=0.5)
+```
+}
 \seealso{
 \code{\link[=response.plot]{response.plot()}}
 }

@@ -15,10 +15,10 @@
 \arguments{
 \item{object}{an object of class "maxnet", i.e., a fitted model.}
 
-\item{newdata}{values of predictor variables to predict to, possibly
+\item{newdata}{values of predictor variables to predict to, can be one of
 matrix, data.frame, \code{SpatRaster} or \code{stars} object.}
 
-\item{clamp}{logical, f true, predictors and features are restricted to the range seen during model training.}
+\item{clamp}{logical, if true, predictors and features are restricted to the range seen during model training.}
 
 \item{type}{character, type of response required. Using \code{lp} for the linear predictor
 and \code{entropy} for the entropy of the exponential model over the background data,

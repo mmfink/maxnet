@@ -59,7 +59,7 @@ either designate the classes to use with \code{classes} and set \code{f = NULL},
 }}
 }
 \value{
-Maxnet returns an object of class \code{maxnet}, which is a list
+returns an object of class \code{maxnet}, which is a list
 consisting of a glmnet model with the following elements added:
 \itemize{
 \item \code{betas} nonzero coefficients of the fitted model
@@ -80,7 +80,7 @@ Maxent species distribution modeling using glmnet for model fitting
 \details{
 Using \code{lp} for the linear predictor and \code{entropy} for the entropy
 of the exponential model over the background data, the values plotted on
-the y-axis are:
+the y-axis of the response curves are:
 \itemize{
 \item \code{lp} if \code{type} is "link"
 \item \code{exp(lp)} if \code{type} is "exponential"

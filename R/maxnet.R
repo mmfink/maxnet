@@ -36,14 +36,14 @@
 #' @details
 #' Using `lp` for the linear predictor and `entropy` for the entropy
 #' of the exponential model over the background data, the values plotted on
-#' the y-axis are:
+#' the y-axis of the response curves are:
 #'   
 #'   * `lp` if `type` is "link"
 #'   * `exp(lp)` if `type` is "exponential"     
 #'   * `1-exp(-exp(entropy+lp))` if `type` is "cloglog"
 #'   * `1/(1+exp(-entropy-lp))` if `type` is "logistic"
 #'
-#' @return Maxnet returns an object of class \code{maxnet}, which is a list
+#' @return returns an object of class \code{maxnet}, which is a list
 #'   consisting of a glmnet model with the following elements added:
 #'  * `betas` nonzero coefficients of the fitted model 
 #'  * `alpha` constant offset making the exponential model sum to one over the background data 
@@ -88,7 +88,11 @@ function(p, data, f=maxnet.formula(p, data), regmult=1.0,
    reg <- regfun(p,mm) * regmult
    weights <- p+(1-p)*100
    glmnet::glmnet.control(pmin=1.0e-8, fdev=0)  
-   model <- glmnet::glmnet(x=mm, y=as.factor(p), family="binomial", standardize=F, penalty.factor=reg, lambda=10^(seq(4,0,length.out=200))*sum(reg)/length(reg)*sum(p)/sum(weights), weights=weights)
+   model <- glmnet::glmnet(x=mm, y=as.factor(p), family="binomial", 
+                           standardize=F, penalty.factor=reg, 
+                           lambda=10^(seq(4,0,length.out=200))*sum(reg)/length(reg)*sum(p)/sum(weights), 
+                           weights=weights)
+   
    class(model) <- c("maxnet", class(model))
    if (length(model$lambda) < 200) {
         msg <- "Error: glmnet failed to complete regularization path.  Model may be infeasible."

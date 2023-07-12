@@ -15,6 +15,16 @@
 #' @param ... other arguments passed to [plot()] or [barplot()]
 #' @return if `plot` is `FALSE` then return a list of data frames 
 #'   that contain variable and response columns otherwise `NULL` invisibly
+#' @examples  
+#' ```
+#' # To generate the same type of plots that the Maxent java program does
+#'   library(maxnet)
+#'   data(bradypus)
+#'   p <- bradypus$presence
+#'   data <- bradypus[,-1]
+#'   mod <- maxnet(p, data)
+#'   plot(mod, type="cloglog", asp=0.5)
+#' ```
 plot.maxnet <-
 function(x, vars=names(x$samplemeans), 
          common.scale=TRUE, 
