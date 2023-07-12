@@ -35,7 +35,7 @@ See \code{par} for details.}
 
 \item{N}{numeric, the number of intervals over which to sample the response}
 
-\item{...}{other arguments passed to \code{plot} or \code{barplot}}
+\item{...}{other arguments passed to \code{\link[=plot]{plot()}} or \code{\link[=barplot]{barplot()}}}
 }
 \value{
 if \code{plot} is \code{FALSE} then return a list of data frames
@@ -44,6 +44,18 @@ that contain variable and response columns otherwise \code{NULL} invisibly
 \description{
 Create response plots for user selected predictors in a maxnet model
 }
+\examples{
+ 
+```
+# To generate the same type of plots that the Maxent java program does
+  library(maxnet)
+  data(bradypus)
+  p <- bradypus$presence
+  data <- bradypus[,-1]
+  mod <- maxnet(p, data)
+  plot(mod, type="cloglog", asp=0.5)
+```
+}
 \seealso{
-\code{\link{response.plot}}
+\code{\link[=response.plot]{response.plot()}}
 }

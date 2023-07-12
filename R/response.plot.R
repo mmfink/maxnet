@@ -1,6 +1,6 @@
 #' Compute and plot a single response variable
 #' 
-#' @seealso \code{\link{plot.maxnet}}
+#' @seealso [plot.maxnet()]
 #' @export
 #' @param mod	a fitted model, must be of type maxnet if default values used for other arguments.
 #' @param v	charvacter, name of variable to be plotted.
@@ -11,12 +11,12 @@
 #' @param min	numeric, minimum value of v; determines range of x-axis
 #' @param max	numeric, maximum value of v; determines range of x-axis
 #' @param levels vector, if v is a factor, determines levels to be plotted
-#' @param plot logical, if \code{TRUE} render the plot (or barplot) if \code{FALSE}
+#' @param plot logical, if `TRUE` render the plot (or barplot) if `FALSE`
 #'   then compute the response and return a data.frame
 #' @param N numeric, the number of intervals over which to sample the response
 #' @param ...	other argument passed to plot or barplot
-#' @return if \code{plot} is \code{FALSE} a data frame 
-#'   that contains variable and response columns otherwise \code{NULL} invisibly
+#' @return if `plot` is `FALSE` a data frame 
+#'   that contains variable and response columns otherwise `NULL` invisibly
 response.plot <-
 function(mod, v, type, 
          mm=mod$samplemeans, 

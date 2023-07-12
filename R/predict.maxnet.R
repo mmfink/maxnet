@@ -4,9 +4,9 @@
 #' 
 #' @export
 #' @param object an object of class "maxnet", i.e., a fitted model.
-#' @param newdata values of predictor variables to predict to, possibly
+#' @param newdata values of predictor variables to predict to, can be one of
 #'   matrix, data.frame, \code{SpatRaster} or \code{stars} object. 
-#' @param clamp logical, f true, predictors and features are restricted to the range seen during model training.
+#' @param clamp logical, if true, predictors and features are restricted to the range seen during model training.
 #' @param type character, type of response required. Using \code{lp} for the linear predictor 
 #' and \code{entropy} for the entropy of the exponential model over the background data, 
 #' the values returned are determined by the value of \code{type}.
@@ -43,7 +43,8 @@ predict.maxnet <-
     
     if (clamp) {
       for (v in intersect(names(object$varmax), names(newdataframe))) {
-        newdataframe[,v] <- pmin(pmax(newdataframe[,v], object$varmin[v]), object$varmax[v])
+        #newdataframe[,v] <- pmin(pmax(newdataframe[,v], object$varmin[v]), object$varmax[v])
+        newdataframe[[v]] <- pmin(pmax(newdataframe[[v]], object$varmin[v]), object$varmax[v])
       }
     }
     terms <- sub("hinge\\((.*)\\):(.*):(.*)$", "hingeval(\\1,\\2,\\3)", names(object$betas))
