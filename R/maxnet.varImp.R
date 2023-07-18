@@ -52,7 +52,7 @@ maxnet.varImp <- function(modobj, resp_table, numReplicates = 5) {
   par(mar=c(4,7,4,1) + 0.1)
   plotvar <- out[order(out)]
   b <- barplot(height=plotvar, width=length(plotvar), 
-               col=hcl.colors(length(plotvar), palette="PuBu"),
+               col=hcl.colors(length(plotvar), palette="PuBu", rev=TRUE),
                yaxt="n", horiz=TRUE, main="Variable Importance")
   mtext(names(plotvar), side=2, line=0.1, las=1, at=b, cex=0.8)
   invisible(NULL)
