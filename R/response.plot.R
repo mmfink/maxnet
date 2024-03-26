@@ -25,7 +25,7 @@ function(mod, v, type,
          levels=unlist(mod$levels[v]), 
          plot=T, 
          xlab=v, 
-         ylab=tools::toTitleCase(type), 
+         ylab=ylab, 
          N = 100,
          ...) {
    nr <- if (is.null(levels)) N else length(levels)

@@ -31,7 +31,7 @@ function(x, vars=names(x$samplemeans),
          type=c("link","exponential","cloglog","logistic"), 
          ylab=NULL, 
          plot = TRUE,
-         mar = c(1,1,1,1) + 0.1,
+         mar = c(4,3,3,1) + 0.1,
          N = 100, 
          ...)
 {
@@ -47,13 +47,15 @@ function(x, vars=names(x$samplemeans),
    if (plot){
      nc <- ceiling(sqrt(length(vars)))
      nr <- ceiling(length(vars)/nc)
-     graphics::par(mfrow=c(nr,nc), mar=mar+.1,
-                   cex.axis=2, cex.lab=2.5, lwd=2)
-     for (v in vars) response.plot(x, v, type, ylim=ylim, ylab=ylab, N = N, main = v, col="red")
+     graphics::par(mfrow=c(nr,nc), mar=mar,
+                   cex.axis=1.8, cex.lab=2.2, lwd=2)
+     for (v in vars) response.plot(x, v, type, ylim=ylim, ylab=ylab, 
+                                   N = N, col="red")
    } else {
      return(sapply(vars, 
                    function(v){
-                     response.plot(x, v, type, ylim=ylim, ylab=ylab, N = N, plot = FALSE)
+                     response.plot(x, v, type, ylim=ylim, ylab=ylab, 
+                                   N = N, plot = FALSE)
                    }, simplify = FALSE))
    }
    invisible(NULL)
