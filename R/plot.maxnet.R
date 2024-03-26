@@ -31,7 +31,7 @@ function(x, vars=names(x$samplemeans),
          type=c("link","exponential","cloglog","logistic"), 
          ylab=NULL, 
          plot = TRUE,
-         mar = c(5,5,4,2),
+         mar = c(1,1,1,1) + 0.1,
          N = 100, 
          ...)
 {
