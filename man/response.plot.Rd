@@ -14,7 +14,7 @@ response.plot(
   levels = unlist(mod$levels[v]),
   plot = T,
   xlab = v,
-  ylab = tools::toTitleCase(type),
+  ylab = ylab,
   N = 100,
   ...
 )

@@ -29,5 +29,5 @@ function(p, data, classes="default")
    }
    if (length(categorical))
       terms <- c(terms, paste("categorical(",categorical,")",sep="",collapse=" + "))
-   formula(paste("~", paste(terms, collapse = " + "), "-1"))
+   stats::formula(paste("~", paste(terms, collapse = " + "), "-1"))
 }

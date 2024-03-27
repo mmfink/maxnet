@@ -1,4 +1,5 @@
-#' Compute and plot a single response variable
+#' @name response.plot
+#' @title Compute and plot a single response variable
 #' 
 #' @seealso [plot.maxnet()]
 #' @export
@@ -42,7 +43,7 @@ function(mod, v, type,
       }
    }
    else {
-     return(setNames(data.frame(m[, v], preds), c(v, 'pred')))
+     return(stats::setNames(data.frame(m[, v], preds), c(v, 'pred')))
    }
    invisible(NULL)
 }

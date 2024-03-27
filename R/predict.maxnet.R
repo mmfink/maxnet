@@ -1,11 +1,13 @@
-#' Predict using a maxnet model
+#' @name predict
+#' @title Predict using a maxnet model
 #' 
+#' @description
 #' Prediction can be on a spatial raster or vector space.
 #' 
 #' @export
 #' @param object an object of class "maxnet", i.e., a fitted model.
 #' @param newdata values of predictor variables to predict to, can be one of
-#'   matrix, data.frame, \code{SpatRaster} or \code{stars} object. 
+#'   matrix, data.frame, \pkg{SpatRaster} or \pkg{stars} object. 
 #' @param clamp logical, if true, predictors and features are restricted to the range seen during model training.
 #' @param type character, type of response required. Using \code{lp} for the linear predictor 
 #' and \code{entropy} for the entropy of the exponential model over the background data, 
@@ -50,8 +52,8 @@ predict.maxnet <-
     terms <- sub("hinge\\((.*)\\):(.*):(.*)$", "hingeval(\\1,\\2,\\3)", names(object$betas))
     terms <- sub("categorical\\((.*)\\):(.*)$", "categoricalval(\\1,\"\\2\")", terms)
     terms <- sub("thresholds\\((.*)\\):(.*)$", "thresholdval(\\1,\\2)", terms)
-    f <- formula(paste("~", paste(terms, collapse=" + "), "-1"))
-    mm <- model.matrix(f, data.frame(newdataframe))
+    f <- stats::formula(paste("~", paste(terms, collapse=" + "), "-1"))
+    mm <- stats::model.matrix(f, data.frame(newdataframe))
     if (clamp) mm <- t(pmin(pmax(t(mm), object$featuremins[names(object$betas)]), 
                             object$featuremaxs[names(object$betas)]))
     link <- (mm %*% object$betas) + object$alpha

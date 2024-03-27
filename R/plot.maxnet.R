@@ -1,4 +1,5 @@
-#' Create response plots for user selected predictors in a maxnet model
+#' @name plot
+#' @title Create response plots for user selected predictors in a maxnet model
 #' 
 #' @seealso [response.plot()]
 #' @export

@@ -27,12 +27,14 @@
 #' @return \code{hinge}, \code{threshold} and \code{categorical}
 #' return a matrix with a column for each feature of the specified type.
 #' @examples
+#' ```
 #' \dontrun{
 #'   library(maxnet)
 #'   data(bradypus)
 #'   hinge(bradypus$tmp6190_ann,nknots=10)
 #'   categorical(bradypus$ecoreg)
 #'  }
+#' ```
 hinge <-
 function(x, nknots=50)
 {

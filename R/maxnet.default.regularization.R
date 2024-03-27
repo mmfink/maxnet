@@ -24,18 +24,18 @@ function(p, m)
    if (sum(isproduct(colnames(mm)))) lqpreg <- pregtable
    classregularization <- sapply(colnames(mm), function(n) {
       t <- regtable(n, lqpreg)
-      approx(t[[1]], t[[2]], np, rule=2)$y
+      stats::approx(t[[1]], t[[2]], np, rule=2)$y
    }) / sqrt(np)
    # increase regularization for extreme hinges
    ishinge <- grepl("^hinge\\(", colnames(mm))
    hmindev <- sapply(1:ncol(mm), function(i) {
       if (!ishinge[i]) return(0)
       avg <- mean(mm[,i])
-      std <- max(sd(mm[,i]), 1/sqrt(np))
+      std <- max(stats::sd(mm[,i]), 1/sqrt(np))
       std*.5/sqrt(np)
    })
    # increase reg'n for threshold features that are all 1 or 0 on presences
    tmindev <- sapply(1:ncol(mm), function(i) {
       ifelse(isthreshold(colnames(mm)[i]) && (sum(mm[,i])==0 || sum(mm[,i])==nrow(mm)), 1,0)})
-   pmax(0.001 * (apply(m,2,max)-apply(m,2,min)), hmindev, tmindev, apply(as.matrix(mm), 2, sd) * classregularization)
+   pmax(0.001 * (apply(m,2,max)-apply(m,2,min)), hmindev, tmindev, apply(as.matrix(mm), 2, stats::sd) * classregularization)
 }

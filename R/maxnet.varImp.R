@@ -1,10 +1,14 @@
-#' Variable importance for a maxnet model
-#'
+#' @name maxnet.varImp
+#' @title Variable importance for a maxnet model
+#' @description
 #' Computes variable importance scores for all variables present in a maxnet model object. Scores are indicative and should be interpreted with caution as variable interaction is not considered in the computation of the scores.
+#' 
+#' @importFrom grDevices hcl.colors
 #' @export
 #' @param modobj Object of class maxnet
 #' @param resp_table Data.frame. Response table. First column is assumed to be 'response'
 #' @param numReplicates Integer. Number of permutations performed to compute importance.
+#' @param plotit Boolean, default TRUE. If false, only the named vector is returned.
 #'
 #' @details {
 #' The method used to compute variable importance follows that used in R packages \pkg{biomod2} and \pkg{ecospat}. First, model predictions are made for each row of the environmental data table (or 'response table') \emph{resp_table}. 
@@ -17,9 +21,9 @@
 #' }
 #'
 #' @return A plot and a named vector of percent importance scores for the variables present in the maxnet model object sorted from highest to lowest.
-#' @references based on peterbat1/fitMaxnet varImportance.R [https://rdrr.io/github/peterbat1/fitMaxnet/src/R/varImportance.R]
+#' @references based on [peterbat1/fitMaxnet varImportance.R](https://rdrr.io/github/peterbat1/fitMaxnet/src/R/varImportance.R)
 
-maxnet.varImp <- function(modobj, resp_table, numReplicates = 5) {
+maxnet.varImp <- function(modobj, resp_table, numReplicates=5, plotit=TRUE) {
   varList <- names(modobj$samplemeans)
   importance <- vector("numeric", length(varList))
   names(importance) <- varList
@@ -36,7 +40,7 @@ maxnet.varImp <- function(modobj, resp_table, numReplicates = 5) {
       permInd <- sample(1:nrow(envData), nrow(envData))
       envData[[thisVar]] <- origVals[permInd]
       newModelVals <- predict(modobj, envData)
-      correls[thisRep] <- cor(fullModelVals, newModelVals)
+      correls[thisRep] <- stats::cor(fullModelVals, newModelVals)
     }
     
     # Re-instate original values for the variable
@@ -49,13 +53,15 @@ maxnet.varImp <- function(modobj, resp_table, numReplicates = 5) {
   importance <- 1 - importance
   out <- round(100*importance/sum(importance), 2)
   
-  par(mar=c(4,7,4,1) + 0.1)
-  plotvar <- out[order(out)]
-  b <- barplot(height=plotvar, width=length(plotvar), 
-               col=hcl.colors(length(plotvar), palette="PuBu", rev=TRUE),
-               yaxt="n", horiz=TRUE, main="Variable Importance")
-  mtext(names(plotvar), side=2, line=0.1, las=1, at=b, cex=0.8)
-  invisible(NULL)
+  if(plotit){
+    graphics::par(mar=c(4,7,4,1) + 0.1)
+    plotvar <- out[order(out)]
+    b <- graphics::barplot(height=plotvar, width=length(plotvar), 
+                           col=hcl.colors(length(plotvar), palette="PuBu", rev=TRUE),
+                           yaxt="n", horiz=TRUE, main="Variable Importance")
+    graphics::mtext(names(plotvar), side=2, line=0.1, las=1, at=b, cex=0.8)
+    invisible(NULL)
+  }
   
   return(out)
 }

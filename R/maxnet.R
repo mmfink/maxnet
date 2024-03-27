@@ -84,7 +84,7 @@ function(p, data, f=maxnet.formula(p, data), regmult=1.0,
        p <- c(p, rep(0, nrow(toadd)))
        data <- rbind(data, toadd)
    }   
-   mm <- model.matrix(f, data)
+   mm <- stats::model.matrix(f, data)
    reg <- regfun(p,mm) * regmult
    weights <- p+(1-p)*100
    glmnet::glmnet.control(pmin=1.0e-8, fdev=0)  

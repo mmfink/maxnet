@@ -4,7 +4,7 @@
 \alias{maxnet.varImp}
 \title{Variable importance for a maxnet model}
 \usage{
-maxnet.varImp(modobj, resp_table, numReplicates = 5)
+maxnet.varImp(modobj, resp_table, numReplicates = 5, plotit = TRUE)
 }
 \arguments{
 \item{modobj}{Object of class maxnet}
@@ -12,6 +12,8 @@ maxnet.varImp(modobj, resp_table, numReplicates = 5)
 \item{resp_table}{Data.frame. Response table. First column is assumed to be 'response'}
 
 \item{numReplicates}{Integer. Number of permutations performed to compute importance.}
+
+\item{plotit}{Boolean, default TRUE. If false, only the named vector is returned.}
 }
 \value{
 A plot and a named vector of percent importance scores for the variables present in the maxnet model object sorted from highest to lowest.
@@ -31,5 +33,5 @@ A vector of mean scores for each variable expressed as a percentage of the sum o
 }
 }
 \references{
-based on peterbat1/fitMaxnet varImportance.R \link{https://rdrr.io/github/peterbat1/fitMaxnet/src/R/varImportance.R}
+based on \href{https://rdrr.io/github/peterbat1/fitMaxnet/src/R/varImportance.R}{peterbat1/fitMaxnet varImportance.R}
 }

@@ -41,12 +41,14 @@ A \code{categorical} feature is 1 if the predictor matches the category
 and 0 otherwise.
 }
 \examples{
+```
 \dontrun{
   library(maxnet)
   data(bradypus)
   hinge(bradypus$tmp6190_ann,nknots=10)
   categorical(bradypus$ecoreg)
  }
+```
 }
 \author{
 Steve Phillips
